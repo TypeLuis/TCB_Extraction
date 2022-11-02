@@ -32,7 +32,9 @@
         align-items: center;
         justify-content: center;
 
-        h1 {}
+        h1 {
+            margin: 0 auto;
+        }
 
         img {
             max-width: 95%;
