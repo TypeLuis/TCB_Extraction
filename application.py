@@ -1,4 +1,3 @@
-# import models
 from dotenv import load_dotenv
 import os
 from flask import Flask
@@ -9,9 +8,6 @@ from bs4 import BeautifulSoup as bs
 app = Flask(__name__)
 
 load_dotenv()
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
 
 domain = "https://onepiecechapters.com"
 
