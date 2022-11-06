@@ -50,6 +50,6 @@ def Get_Chapters(doc):
 url = "https://onepiecechapters.com/mangas/5/one-piece"
 
 doc = get_data(url)
-parse(doc)
+chapters = Get_Chapters(doc)
 
 # print(get_data(url=url))
