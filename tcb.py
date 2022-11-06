@@ -20,15 +20,24 @@ def parse(doc, chapter):
         "a", {"class": "block border border-border bg-card mb-3 p-3 rounded"})
 
     chapter_list = []
-    for link in links[0:2]:
+    for link in links:
 
         chapter = {}
 
-        chapter["title"] = link.find(class_='text-gray-500').text
-        chapter["chapter"] = link.find(class_='text-lg font-bold').text
-        chapter["url"] = f'{domain}{link["href"]}'
+        title = link.find(class_='text-gray-500').text
+        chapter = link.find(class_='text-lg font-bold').text
+        url = f'{domain}{link["href"]}'
 
-        print(chapter)
+        if '.' in chapter:
+            continue
+
+        chapter["title"] = title
+        chapter["chapter"] = chapter
+        chapter["url"] = url
+
+        chapter_list.append(chapter)
+
+    print(chapter_list)
 
     # images = doc.find_all("img", {"class": "fixed-ratio-content"})
     # image_list = []
