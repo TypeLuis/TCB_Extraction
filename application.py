@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 load_dotenv()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 
 domain = "https://onepiecechapters.com"
@@ -29,55 +29,65 @@ def root():
 
 @app.route('/chapter-list', methods=['GET'])
 def get_chapters():
-    url = "https://onepiecechapters.com/mangas/5/one-piece"
+    try:
 
-    doc = get_data(url)
+        url = "https://onepiecechapters.com/mangas/5/one-piece"
 
-    links = doc.find_all(
-        "a", {"class": "block border border-border bg-card mb-3 p-3 rounded"})
+        doc = get_data(url)
 
-    chapter_list = []
-    for link in links:
+        links = doc.find_all(
+            "a", {"class": "block border border-border bg-card mb-3 p-3 rounded"})
 
-        obj = {}
+        chapter_list = []
+        for link in links:
 
-        title = link.find(class_='text-gray-500').text
-        chapter = link.find(class_='text-lg font-bold').text
-        url = f'{domain}{link["href"]}'
+            obj = {}
 
-        if '.' in chapter:
-            continue
+            title = link.find(class_='text-gray-500').text
+            chapter = link.find(class_='text-lg font-bold').text
+            url = f'{domain}{link["href"]}'
 
-        obj["title"] = title
-        obj["chapter"] = chapter
-        obj["url"] = url
+            if '.' in chapter:
+                continue
 
-        chapter_list.append(obj)
+            obj["title"] = title
+            obj["chapter"] = chapter
+            obj["url"] = url
 
-    return {"chapter_list": chapter_list}
+            chapter_list.append(obj)
+
+        return {"chapter_list": chapter_list}
+    except Exception as e:
+        print(e)
+        return {"page_info": f'{e}'}
 
 
 @app.route('/chapter/<int:chapter>', methods=['GET'])
 def get_page_content(chapter):
-    url = "https://onepiecechapters.com/mangas/5/one-piece"
-    doc = get_data(url)
-    image_list = []
+    try:
+        url = "https://onepiecechapters.com/mangas/5/one-piece"
+        doc = get_data(url)
+        image_list = []
 
-    div = doc.find(class_='col-span-2')
-    item = div.find(text=f'One Piece Chapter {chapter}').parent.parent
+        div = doc.find(class_='col-span-2')
+        item = div.find(text=f'One Piece Chapter {chapter}').parent.parent
 
-    title = item.find(class_='text-gray-500').text
-    chapter_number = item.find(class_='text-lg font-bold').text
-    page_url = item['href']
+        title = item.find(class_='text-gray-500').text
+        chapter_number = item.find(class_='text-lg font-bold').text
+        page_url = item['href']
 
-    link = f'{domain}{page_url}'
+        link = f'{domain}{page_url}'
 
-    page = get_data(link)
-    images = page.find_all("img", {"class": "fixed-ratio-content"})
-    for image in images:
-        image_list.append(image['src'])
+        page = get_data(link)
+        images = page.find_all("img", {"class": "fixed-ratio-content"})
+        for image in images:
+            image_list.append(image['src'])
 
-    return {"images": image_list, 'title': title, 'chapter': chapter_number}
+        return {"images": image_list, 'title': title, 'chapter': chapter_number}
+
+    except Exception as e:
+        print(e)
+        return {"page_info": f'{e}'}
 
 
 if __name__ == '__main__':
