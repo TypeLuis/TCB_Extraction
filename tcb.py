@@ -11,7 +11,7 @@ def get_data(url):
     return doc
 
 
-def parse(doc):
+def Get_Chapters(doc):
     # div = doc.find(class_='col-span-2')
     # item = div.find(text=f'One Piece Chapter {chapter}').parent.parent
     # print(item.find(class_='text-gray-500').text)
@@ -37,7 +37,7 @@ def parse(doc):
 
         chapter_list.append(obj)
 
-    print(chapter_list)
+    return chapter_list
 
     # images = doc.find_all("img", {"class": "fixed-ratio-content"})
     # image_list = []
