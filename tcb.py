@@ -46,10 +46,34 @@ def Get_Chapters(doc):
     #     print(source)
 
 
-# url = "https://onepiecechapters.com/chapters/4716/one-piece-chapter-1065"
-url = "https://onepiecechapters.com/mangas/5/one-piece"
+def get_page_content(chapter):
+    url = "https://onepiecechapters.com/mangas/5/one-piece"
+    doc = get_data(url)
+    image_list = []
 
-doc = get_data(url)
-chapters = Get_Chapters(doc)
+    div = doc.find(class_='col-span-2')
+    item = div.find(text=f'One Piece Chapter {chapter}').parent.parent
+
+    title = item.find(class_='text-gray-500').text
+    chapter_number = item.find(class_='text-lg font-bold').text
+    page_url = item['href']
+
+    link = f'{domain}{page_url}'
+
+    page = get_data(link)
+    images = page.find_all("img", {"class": "fixed-ratio-content"})
+    for image in images:
+        image_list.append(image['src'])
+
+    return {"images": image_list, 'title': title, 'chapter': chapter_number}
+
+
+print(get_page_content(1000))
+
+# url = "https://onepiecechapters.com/chapters/4716/one-piece-chapter-1065"
+# url = "https://onepiecechapters.com/mangas/5/one-piece"
+
+# doc = get_data(url)
+# chapters = Get_Chapters(doc)
 
 # print(get_data(url=url))
