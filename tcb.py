@@ -11,7 +11,7 @@ def get_data(url):
     return doc
 
 
-def parse(doc, chapter):
+def parse(doc):
     # div = doc.find(class_='col-span-2')
     # item = div.find(text=f'One Piece Chapter {chapter}').parent.parent
     # print(item.find(class_='text-gray-500').text)
@@ -22,7 +22,7 @@ def parse(doc, chapter):
     chapter_list = []
     for link in links:
 
-        chapter = {}
+        obj = {}
 
         title = link.find(class_='text-gray-500').text
         chapter = link.find(class_='text-lg font-bold').text
@@ -31,11 +31,11 @@ def parse(doc, chapter):
         if '.' in chapter:
             continue
 
-        chapter["title"] = title
-        chapter["chapter"] = chapter
-        chapter["url"] = url
+        obj["title"] = title
+        obj["chapter"] = chapter
+        obj["url"] = url
 
-        chapter_list.append(chapter)
+        chapter_list.append(obj)
 
     print(chapter_list)
 
@@ -50,6 +50,6 @@ def parse(doc, chapter):
 url = "https://onepiecechapters.com/mangas/5/one-piece"
 
 doc = get_data(url)
-parse(doc, 1052)
+parse(doc)
 
 # print(get_data(url=url))
