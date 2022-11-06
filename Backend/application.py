@@ -1,13 +1,12 @@
-from dotenv import load_dotenv
 import os
 from flask import Flask
 import requests
 from bs4 import BeautifulSoup as bs
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-
-load_dotenv()
+CORS(app)
 
 domain = "https://onepiecechapters.com"
 
