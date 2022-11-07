@@ -31,7 +31,11 @@ const Chapter = () => {
         return (
             <div className={classes.links}>
 
-                <Link onClick={() => { SetPage(page = Number(page) - 1) }} href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link>
+                {/* <Link onClick={() => { SetPage(page = Number(page) - 1) }} href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link> */}
+
+                <div onClick={() => { router.push(`/${Number(page) - 1}`) }}>
+                    Previous
+                </div>
 
                 <Link href={`${domain}`}>View List</Link>
 

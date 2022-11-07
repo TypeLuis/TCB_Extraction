@@ -10,9 +10,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 50%;
+        width: 60%;
+        max-width: 700px;
         border-radius: 10px;
         background-color: gray;
         padding: 1em;
+        transition: .5s ease-in;
+        box-shadow: inset 2px 1px 5px 2px white, 1px 1px 3px 1px whitesmoke;
+        // box-shadow: 3px 1px 5px 2px white;
+
+        &:hover {
+            background-color: cadetblue;
+        }
     }
 }
