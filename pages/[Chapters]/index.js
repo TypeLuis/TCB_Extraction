@@ -15,14 +15,14 @@ const Chapter = () => {
     const [page, SetPage] = useState()
 
     const getInfo = async () => {
-        const check = number === undefined ? window.location.pathname.split('/')[1] : number
+        const check = number === undefined ? Number(window.location.pathname.split('/')[1]) : Number(number)
         SetPage(check)
         const response = await axios.get(`${process.env.BACKEND_URL}/chapter/${check}`)
         setResponse(response)
     }
 
     useEffect(() => {
-        console.log(router)
+        console.log(typeof (page))
         setDomain(window.location.origin)
         getInfo()
     }, [page])
@@ -31,15 +31,11 @@ const Chapter = () => {
         return (
             <div className={classes.links}>
 
-                {/* <Link onClick={() => { SetPage(page = Number(page) - 1) }} href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link> */}
-
-                <div onClick={() => { router.push(`/${Number(page) - 1}`) }}>
-                    Previous
-                </div>
+                <Link onClick={() => { SetPage(page = page - 1) }} href={`${domain}/${page - 1}`} className={classes.previous}>Previous</Link>
 
                 <Link href={`${domain}`}>View List</Link>
 
-                <Link onClick={() => { SetPage(page = Number(page) + 1) }} href={`${domain}/${Number(page) + 1}`} className={classes.next}>Next</Link>
+                <Link onClick={() => { SetPage(page = page + 1) }} href={`${domain}/${page + 1}`} className={classes.next}>Next</Link>
             </div>
         )
     }
