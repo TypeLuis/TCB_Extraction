@@ -22,7 +22,7 @@ export default function Home() {
         response.data.chapter_list.map((item, i) => {
           const chapterNum = item.chapter.split(' ')[3]
           return (
-            <Link href={`/${chapterNum}`}>
+            <Link key={i} href={`/${chapterNum}`}>
               <div>{item.chapter}</div>
               <div>{item.title}</div>
             </Link>

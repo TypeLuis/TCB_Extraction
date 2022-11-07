@@ -51,7 +51,7 @@ const Chapter = () => {
 
                         {response.data.images?.map((item, i) => {
                             return (
-                                <img src={item} />
+                                <img key={i} src={item} />
                             )
                         })}
 
