@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import classes from '../../styles/Chapter.module.scss'
 import Link from 'next/link'
+import Head from 'next/head'
 
 
 const Chapter = () => {
@@ -41,6 +42,9 @@ const Chapter = () => {
 
     return (
         <div className={classes.main}>
+            <Head>
+                <title>One Piece chapter {page}</title>
+            </Head>
             {
                 response?.status === 200 && response.data.chapter &&
                 <>

@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.scss'
+import Head from 'next/head'
 import classes from '../styles/Home.module.scss'
 import Link from 'next/link'
 import axios from 'axios'
@@ -16,6 +16,9 @@ export default function Home() {
   }, [])
   return (
     <div className={classes.main}>
+      <Head>
+        <title>One Piece Chapters</title>
+      </Head>
       <h1>One Piece Chapters</h1>
       {response?.data.chapter_list &&
 
