@@ -21,19 +21,20 @@ const Chapter = () => {
     }
 
     useEffect(() => {
+        console.log(router)
         setDomain(window.location.origin)
         getInfo()
-    }, [])
+    }, [page])
 
     const lists = () => {
         return (
             <div className={classes.links}>
 
-                <Link href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link>
+                <Link onClick={() => { SetPage(page = Number(page) - 1) }} href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link>
 
                 <Link href={`${domain}`}>View List</Link>
 
-                <Link href={`${domain}/${Number(page) + 1}`} className={classes.next}>Next</Link>
+                <Link onClick={() => { SetPage(page = Number(page) + 1) }} href={`${domain}/${Number(page) + 1}`} className={classes.next}>Next</Link>
             </div>
         )
     }
@@ -47,7 +48,9 @@ const Chapter = () => {
                     {lists()}
 
                     <div className={classes.content}>
-                        <h1>{response.data.chapter} : {response.data.title}</h1>
+                        <h1>
+                            {response.data.chapter} : {response.data.title}
+                        </h1>
 
                         {response.data.images?.map((item, i) => {
                             return (
