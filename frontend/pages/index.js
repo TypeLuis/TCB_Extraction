@@ -9,7 +9,6 @@ export default function Home() {
   const getInfo = async () => {
     const response = await axios.get(`${process.env.BACKEND_URL}/chapter-list`)
     setResponse(response)
-    console.log(response)
   }
 
   useEffect(() => {
@@ -17,7 +16,8 @@ export default function Home() {
   }, [])
   return (
     <div className={classes.main}>
-      {response?.status === 200 &&
+      <h1>One Piece Chapters</h1>
+      {response?.data.chapter_list &&
 
         response.data.chapter_list.map((item, i) => {
           const chapterNum = item.chapter.split(' ')[3]

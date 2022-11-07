@@ -18,11 +18,9 @@ const Chapter = () => {
         SetPage(check)
         const response = await axios.get(`${process.env.BACKEND_URL}/chapter/${check}`)
         setResponse(response)
-        console.log(response)
     }
 
     useEffect(() => {
-        console.log(window.location)
         setDomain(window.location.origin)
         getInfo()
     }, [window.location.pathname])
