@@ -23,7 +23,7 @@ const Chapter = () => {
     useEffect(() => {
         setDomain(window.location.origin)
         getInfo()
-    }, [window.location.pathname])
+    }, [])
 
     const lists = () => {
         return (
