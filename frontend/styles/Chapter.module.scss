@@ -3,6 +3,25 @@
     // width: 100%;
     margin-top: 2em;
 
+    .links {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        a {
+            color: black;
+            background-color: paleturquoise;
+            padding: 1em;
+            margin: 1em;
+            border-radius: 5px;
+            transition: .5s ease-in;
+
+
+        }
+
+        // gap: 5em;
+    }
+
     .content {
         display: flex;
         flex-direction: column;
