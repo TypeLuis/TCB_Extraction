@@ -10,6 +10,7 @@ const Chapter = () => {
     const number = router.query.Chapters
 
     const [response, setResponse] = useState()
+    const [domain, setDomain] = useState()
     const [page, SetPage] = useState()
 
     const getInfo = async () => {
@@ -22,32 +23,44 @@ const Chapter = () => {
 
     useEffect(() => {
         console.log(window.location)
+        setDomain(window.location.origin)
         getInfo()
-    }, [])
+    }, [window.location.pathname])
 
-    const domain = window.location.origin
-    return (
-        <div className={classes.main}>
+    const lists = () => {
+        return (
             <div className={classes.links}>
 
-                <Link href={`${domain}/${page - 1}`} className={classes.previous}>Previous</Link>
+                <Link href={`${domain}/${Number(page) - 1}`} className={classes.previous}>Previous</Link>
 
                 <Link href={`${domain}`}>View List</Link>
 
-                <Link href={`${domain}/${page + 1}`} className={classes.next}>Next</Link>
+                <Link href={`${domain}/${Number(page) + 1}`} className={classes.next}>Next</Link>
             </div>
+        )
+    }
+
+    return (
+        <div className={classes.main}>
             {
                 response?.status === 200 && response.data.chapter &&
-                <div className={classes.content}>
-                    <div>{response.data.chapter} : {response.data.title}</div>
+                <>
 
-                    {response.data.images?.map((item, i) => {
-                        return (
-                            <img src={item} />
-                        )
-                    })}
+                    {lists()}
 
-                </div>
+                    <div className={classes.content}>
+                        <h1>{response.data.chapter} : {response.data.title}</h1>
+
+                        {response.data.images?.map((item, i) => {
+                            return (
+                                <img src={item} />
+                            )
+                        })}
+
+                    </div>
+
+                    {lists()}
+                </>
             }
         </div>
     )
