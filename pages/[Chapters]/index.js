@@ -14,17 +14,16 @@ const Chapter = () => {
     const [domain, setDomain] = useState()
     const [page, SetPage] = useState()
 
-    const getInfo = async () => {
-        const check = number === undefined ? Number(window.location.pathname.split('/')[1]) : Number(number)
+    const getInfo = async (check) => {
         SetPage(check)
         const response = await axios.get(`${process.env.BACKEND_URL}/chapter/${check}`)
         setResponse(response)
     }
 
     useEffect(() => {
-        console.log(typeof (page))
+        const check = number === undefined ? Number(window.location.pathname.split('/')[1]) : Number(number)
         setDomain(window.location.origin)
-        getInfo()
+        getInfo(check)
     }, [page])
 
     const lists = () => {
