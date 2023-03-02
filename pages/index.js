@@ -8,11 +8,13 @@ export default function Home() {
   const [response, setResponse] = useState()
   const getInfo = async () => {
     const response = await axios.get(`${process.env.BACKEND_URL}/chapter-list`)
+    console.log('response', response)
     setResponse(response)
   }
 
   useEffect(() => {
     getInfo()
+    console.log(response)
   }, [])
   return (
     <div className={classes.main}>
