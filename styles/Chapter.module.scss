@@ -3,12 +3,26 @@
     // width: 100%;
     margin-top: 2em;
 
+    .selection {
+        // margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        select {
+            width: 50%;
+            text-align: center;
+        }
+    }
+
     .links {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
 
-        a {
+        a,
+        div {
+            cursor: pointer;
             color: black;
             background-color: paleturquoise;
             padding: 1em;
