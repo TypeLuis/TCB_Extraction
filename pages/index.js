@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     getInfo()
-    console.log(response)
+    // console.log(response)
   }, [translator])
   return (
     <div className={classes.main}>
@@ -26,7 +26,7 @@ export default function Home() {
       </Head>
 
       <select onChange={(e) => { setTranslator(e.target.value) }}>
-        <option defaultValue="TCB">TCB</option>
+        <option value="TCB">TCB</option>
         <option value="OPSCAN">OPSCAN</option>
       </select>
 

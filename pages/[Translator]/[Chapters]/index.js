@@ -35,11 +35,11 @@ const Chapter = () => {
     const lists = () => {
         return (
             <div className={classes.links}>
-                <div onClick={() => { window.location.replace(`${domain}/TCB/${page - 1}`) }} className={classes.previous}>Chapter {page - 1}</div>
+                <div onClick={() => { window.location.replace(`${domain}/${window.location.pathname.split('/')[1]}/${page - 1}`) }} className={classes.previous}>Chapter {page - 1}</div>
 
                 <div onClick={() => { window.location.replace(`${domain}`) }}>Chapter List</div>
 
-                <div onClick={() => { window.location.replace(`${domain}/TCB/${page + 1}`) }} className={classes.previous}>Chapter {page + 1}</div>
+                <div onClick={() => { window.location.replace(`${domain}/${window.location.pathname.split('/')[1]}/${page + 1}`) }} className={classes.previous}>Chapter {page + 1}</div>
             </div>
         )
     }
