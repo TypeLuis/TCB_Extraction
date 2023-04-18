@@ -15,12 +15,28 @@ const Chapter = () => {
     const [response, setResponse] = useState()
     const [domain, setDomain] = useState()
     const [page, SetPage] = useState()
+    const [chapters, setChapters] = useState()
 
-    const getInfo = async (chapter, translator) => {
-        SetPage(chapter)
-        const response = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter/${chapter}`)
-        setResponse(response)
-        console.log(scans)
+    const getInfo = async (chapterNum, translator) => {
+        SetPage(chapterNum)
+
+        const chapterList = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter-list`)
+        const list = chapterList.data.chapter_list
+
+        const chapter = typeof list[0].chapter === "string" ? list.filter(x => x.chapter.includes(chapterNum))[0] : list.filter(x => x.chapter === (chapterNum))[0]
+
+        const images = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter/${chapterNum}?url=${chapter.url}`)
+
+        const obj = {
+            'title': chapter.title,
+            'chapter': chapter.chapter,
+            'images': images.data.images,
+            'status': images.status
+        }
+
+        setResponse(obj)
+        setChapters(list)
+        // console.log(scans)
     }
 
     useEffect(() => {
@@ -48,12 +64,14 @@ const Chapter = () => {
         <div className={classes.main}>
             <Head>
                 <title>One Piece chapter {page}</title>
+                {/* Images from OPSCANS are forbidden if it isn't refered to their domain. Reference: https://stackoverflow.com/questions/49433452/forbidden-403-on-image-urls */}
+                <meta name="referrer" content="no-referrer" />
             </Head>
             {
-                response?.status === 200 && response.data.chapter &&
+                response?.status === 200 && response.chapter &&
                 <>
 
-                    <div className={classes.selection}>
+                    <div className={classes.selectionTranslation}>
 
                         <select onChange={(e) => { window.location.replace(`${domain}/${e.target.value}/${page}`) }}>
                             {translation.map((item, i) => {
@@ -72,14 +90,35 @@ const Chapter = () => {
                         </select>
                     </div>
 
+                    <div className={classes.selectionChapter}>
+
+                        <select onChange={(e) => { window.location.replace(`${domain}/${window.location.pathname.split('/')[1]}/${e.target.value}`) }}>
+                            {chapters.map((item, i) => {
+                                const chapter = String(item.chapter)
+                                const title = item.title
+                                return (
+                                    // Adding key to a react fragment
+                                    <React.Fragment key={i}>
+                                        {
+                                            chapter === window.location.pathname.split('/')[2] ?
+                                                <option value={chapter} selected>{chapter} : {title}</option>
+                                                :
+                                                <option value={chapter}>{chapter} : {title}</option>
+                                        }
+                                    </React.Fragment>
+                                )
+                            })}
+                        </select>
+                    </div>
+
                     {lists()}
 
                     <div className={classes.content}>
                         <h1>
-                            {response.data.chapter} : {response.data.title}
+                            Chapter {response.chapter} : {response.title}
                         </h1>
 
-                        {response.data.images?.map((item, i) => {
+                        {response.images?.map((item, i) => {
                             return (
                                 <img key={i} src={item} />
                             )

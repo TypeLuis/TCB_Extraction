@@ -3,8 +3,9 @@
     // width: 100%;
     margin-top: 2em;
 
-    .selection {
-        // margin: 0 auto;
+    .selectionTranslation,
+    .selectionChapter {
+        margin-block: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
