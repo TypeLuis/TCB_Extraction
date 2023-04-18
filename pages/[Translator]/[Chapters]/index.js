@@ -16,6 +16,7 @@ const Chapter = () => {
     const [domain, setDomain] = useState()
     const [page, SetPage] = useState()
     const [chapters, setChapters] = useState()
+    const [loading, setLoading] = useState(true)
 
     const getInfo = async (chapterNum, translator) => {
         SetPage(chapterNum)
@@ -37,6 +38,7 @@ const Chapter = () => {
 
         setResponse(obj)
         setChapters(list)
+        setLoading(false)
         // console.log(scans)
     }
 
@@ -68,67 +70,79 @@ const Chapter = () => {
                 {/* Images from OPSCANS are forbidden if it isn't refered to their domain. Reference: https://stackoverflow.com/questions/49433452/forbidden-403-on-image-urls */}
                 <meta name="referrer" content="no-referrer" />
             </Head>
-            {
-                response?.status === 200 && response.chapter &&
+            {loading ?
+
+                <>
+                    <h1>Loading</h1>
+                </>
+                :
+
                 <>
 
-                    <div className={classes.selectionTranslation}>
+                    {
+                        response?.status === 200 && response.chapter &&
+                        <>
 
-                        <select onChange={(e) => { window.location.replace(`${domain}/${e.target.value}/${page}`) }}>
-                            {translation.map((item, i) => {
-                                return (
-                                    // Adding key to a react fragment
-                                    <React.Fragment key={i}>
-                                        {
-                                            item === window.location.pathname.split('/')[1] ?
-                                                <option value={item} selected>{item}</option>
-                                                :
-                                                <option value={item}>{item}</option>
-                                        }
-                                    </React.Fragment>
-                                )
-                            })}
-                        </select>
-                    </div>
+                            <div className={classes.selectionTranslation}>
 
-                    <div className={classes.selectionChapter}>
+                                <select onChange={(e) => { window.location.replace(`${domain}/${e.target.value}/${page}`) }}>
+                                    {translation.map((item, i) => {
+                                        return (
+                                            // Adding key to a react fragment
+                                            <React.Fragment key={i}>
+                                                {
+                                                    item === window.location.pathname.split('/')[1] ?
+                                                        <option value={item} selected>{item}</option>
+                                                        :
+                                                        <option value={item}>{item}</option>
+                                                }
+                                            </React.Fragment>
+                                        )
+                                    })}
+                                </select>
+                            </div>
 
-                        <select onChange={(e) => { window.location.replace(`${domain}/${window.location.pathname.split('/')[1]}/${e.target.value}`) }}>
-                            {chapters.map((item, i) => {
-                                const chapter = String(item.chapter)
-                                const title = item.title
-                                return (
-                                    // Adding key to a react fragment
-                                    <React.Fragment key={i}>
-                                        {
-                                            chapter === window.location.pathname.split('/')[2] ?
-                                                <option value={chapter} selected>{chapter} : {title}</option>
-                                                :
-                                                <option value={chapter}>{chapter} : {title}</option>
-                                        }
-                                    </React.Fragment>
-                                )
-                            })}
-                        </select>
-                    </div>
+                            <div className={classes.selectionChapter}>
 
-                    {lists()}
+                                <select onChange={(e) => { window.location.replace(`${domain}/${window.location.pathname.split('/')[1]}/${e.target.value}`) }}>
+                                    {chapters.map((item, i) => {
+                                        const chapter = String(item.chapter)
+                                        const title = item.title
+                                        return (
+                                            // Adding key to a react fragment
+                                            <React.Fragment key={i}>
+                                                {
+                                                    chapter === window.location.pathname.split('/')[2] ?
+                                                        <option value={chapter} selected>{chapter} : {title}</option>
+                                                        :
+                                                        <option value={chapter}>{chapter} : {title}</option>
+                                                }
+                                            </React.Fragment>
+                                        )
+                                    })}
+                                </select>
+                            </div>
 
-                    <div className={classes.content}>
-                        <h1>
-                            Chapter {response.chapter} : {response.title}
-                        </h1>
+                            {lists()}
 
-                        {response.images?.map((item, i) => {
-                            return (
-                                <img key={i} src={item} />
-                            )
-                        })}
+                            <div className={classes.content}>
+                                <h1>
+                                    Chapter {response.chapter} : {response.title}
+                                </h1>
 
-                    </div>
+                                {response.images?.map((item, i) => {
+                                    return (
+                                        <img key={i} src={item} />
+                                    )
+                                })}
 
-                    {lists()}
+                            </div>
+
+                            {lists()}
+                        </>
+                    }
                 </>
+
             }
         </div >
     )
