@@ -24,8 +24,11 @@ const Chapter = () => {
         const list = chapterList.data.chapter_list
 
         const chapter = typeof list[0].chapter === "string" ? list.filter(x => x.chapter.includes(chapterNum))[0] : list.filter(x => x.chapter === (chapterNum))[0]
+        console.log(chapter)
 
         const images = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter/${chapterNum}?url=${chapter.url}`)
+
+        console.log(images)
 
         const obj = {
             'title': chapter.title,

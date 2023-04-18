@@ -11,7 +11,7 @@ export default function Home() {
   const getInfo = async () => {
     // const response = await axios.get(`${process.env.BACKEND_URL}/chapter-list`)
     const response = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter-list`)
-    console.log('response', response)
+
     setResponse(response)
   }
 
@@ -34,7 +34,7 @@ export default function Home() {
       {response?.data.chapter_list &&
 
         response.data.chapter_list.map((item, i) => {
-          const chapterNum = item.chapter.split(' ')[1]
+          const chapterNum = item.chapter
           return (
             <Link key={i} href={`/${translator}/${chapterNum}`}>
               <div>{item.chapter}</div>
