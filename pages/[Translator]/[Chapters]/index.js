@@ -28,7 +28,6 @@ const Chapter = () => {
 
         const images = await axios.get(`${process.env.BACKEND_URL}/${translator}-chapter/${chapterNum}?url=${chapter.url}`)
 
-
         const obj = {
             'title': chapter.title,
             'chapter': chapter.chapter,
